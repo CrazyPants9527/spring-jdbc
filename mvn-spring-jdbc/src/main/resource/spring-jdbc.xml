@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	 <!-- 定义注解的在哪个包目录下面  -->
+	 <context:component-scan base-package="net.study.spring.jdbc.dao.Impl"/>
+	<!-- 模仿数据库配置信息 -->
+	<!-- 加载 jdbc.properties 资源文件 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations"><!-- setLocations -->
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+	</bean>
+
+	<!-- <bean id="bookDaoImpl" class="net.study.spring.jdbc.dao.Impl.BookDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean> -->
+
+	<!-- <bean id="JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="bookDaoImpl" class="net.study.spring.jdbc.dao.Impl.BookDaoImpl">
+		<property name="JdbcTemplate" ref="JdbcTemplate"></property>
+	</bean> -->
+</beans>

@@ -1,0 +1,57 @@
+Spring各jar包的作用
+https://www.cnblogs.com/BensonHe/p/3903050.html
+
+spring-aop 用xml实现
+1.在项目配置文件里 导入spring-context spring-aspect spring-text
+2.事务类
+3.代理类
+4.xml配置文件
+
+3.3.1.2.注解方法切点函数
+expression="execution(* net.study.spring.aop.IHello.*(..))"
+1)execution
+语法：execution(方法修饰符+方法返回值 完整类名+方法名(参数类型))
+例如：
+A、execution(public void *(..))：所有返回值是public void的方法都会被拦截到
+
+B、execution(public void day6.com.beans.PersonService.*(..))：
+表示day6.com.beans.PersonService下所有返回值是public void的方法都会被拦截到
+
+C、execution(public void day6.com.beans.PersonService.save(java.lang.String,..))：
+表示day6.com.beans.PersonService类中的第一个形参类型是String的save方法会被拦截到
+
+D、execution(public void save(..))：表示所有类中的save方法会被拦截到
+
+E、execution(public void day6.com.service..*(..))：
+表示day6.com.service包下的类以及子包的类所有public void方法都会被拦截到
+
+F、execution(public !void day6.com.service..*(..))：
+表示day6.com.service包下的类以及子包的类所有public 不是void返回类型的方法都会被拦截到
+
+
+
+
+spring-jdbc
+1.在maven核心配置文件pom.xml导入spring-jdbc和数据源jar包
+2.编写jdbc.properties
+3.在存放spring-jdbc的配置文件里声明模仿数据库配置信息
+4.写一个实体类，比如book（）
+5.写一个接口
+6.写一个dao层类，实现上面接口
+
+解决测试类中@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:spring-jdbc.xml" })报错
+Class<SpringJUnit4ClassRunner> cannot be resolved to a type 问题
+只能更换spring-test.jar的版本，在网上搜索说4.1.6版本有该类，更换完就不报错了（可以改为5.0.4.RELEASE）
+再手动导入import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+继承JdbcDaoSupport时类名报错 如下：
+The type org.springframework.beans.factory.
+BeanInitializationException cannot be resolved. It is indirectly referenced from required .class files.
+解决方法：https://blog.csdn.net/pacosonswjtu/article/details/54135154
+spring-context 版本： 4.2.6.RELEASE
+
+
+
+Caused by: java.lang.ClassNotFoundException: org.apache.commons.logging.LogFactory
+解决方法：spring jar包版本不一致 可以统一用 4.2.6
